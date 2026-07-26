@@ -1,455 +1,104 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#2f6d4f" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Coach Poids" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Coach Poids">
   <title>Mon Coach Poids</title>
   <style>
-
-:root{
-  --bg:#f5f6f2;
-  --panel:#ffffff;
-  --text:#1d2a24;
-  --muted:#6e7d75;
-  --border:#dfe5df;
-  --accent:#2f6d4f;
-  --accent-soft:#e7f1eb;
-  --shadow:0 12px 30px rgba(29,42,36,.08);
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-button,input,select{font:inherit}
-button{cursor:pointer}
-.app-shell{max-width:1120px;margin:auto;padding:22px}
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-h1,h2,h3,p{margin-top:0}
-h1{font-size:1.65rem;margin-bottom:0}
-h2{font-size:1.7rem}
-h3{font-size:1.25rem;margin-bottom:0}
-.eyebrow{font-size:.72rem;letter-spacing:.12em;font-weight:800;color:var(--accent);margin-bottom:6px}
-.muted{color:var(--muted)}
-.panel,.hero-card,.stat-card{
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:20px;
-  box-shadow:var(--shadow);
-}
-.panel{padding:24px;margin-bottom:20px}
-.hero-card{padding:24px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.stack{display:grid;gap:14px}
-label{display:grid;gap:7px;font-weight:650;font-size:.92rem}
-input,select{
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px 13px;
-  background:#fff;
-  color:var(--text);
-  outline:none;
-}
-input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-button{border:0;border-radius:12px;padding:12px 16px;font-weight:800}
-.primary{background:var(--accent);color:white}
-.secondary{background:var(--accent-soft);color:var(--accent)}
-.ghost{background:transparent;border:1px solid var(--border)}
-.small{padding:9px 12px}
-.full{grid-column:1/-1}
-.notice{margin:18px 0 0;font-size:.82rem;color:var(--muted)}
-.hidden{display:none}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
-.stat-card{padding:18px;display:grid;gap:8px}
-.stat-card span{color:var(--muted);font-size:.84rem}
-.stat-card strong{font-size:1.22rem}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.ring{
-  width:140px;height:140px;border-radius:50%;
-  display:grid;place-content:center;text-align:center;
-  background:conic-gradient(var(--accent) 0deg, var(--accent-soft) 0deg);
-  border:9px solid #fff;box-shadow:inset 0 0 0 1px var(--border);
-}
-.ring span{font-size:1.55rem;font-weight:900}
-.ring small{display:block;color:var(--muted)}
-.list{margin-top:18px;display:grid;gap:10px}
-.list-item{border:1px solid var(--border);border-radius:14px;padding:12px;display:flex;justify-content:space-between;gap:12px}
-.list-item small{color:var(--muted);display:block;margin-top:3px}
-.icon-btn{background:#f3f4f2;padding:7px 10px}
-.chart{margin-top:18px;min-height:180px;display:flex;align-items:flex-end;gap:8px;border-bottom:1px solid var(--border);padding:10px 4px 0}
-.bar-wrap{flex:1;display:grid;justify-items:center;gap:6px}
-.bar{width:100%;max-width:32px;background:var(--accent);border-radius:8px 8px 0 0;min-height:8px}
-.bar-label{font-size:.68rem;color:var(--muted)}
-.summary-box{padding:18px;border-radius:14px;background:var(--accent-soft);line-height:1.6}
-footer{text-align:center;color:var(--muted);font-size:.8rem;padding:12px}
-@media(max-width:760px){
-  .app-shell{padding:14px}
-  .form-grid,.two-col{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .hero-card{align-items:flex-start;gap:16px}
-  .ring{width:112px;height:112px;flex:none}
-}
-
-</style>
+    :root{--bg:#f4f6f8;--card:#fff;--text:#172033;--muted:#6b7280;--accent:#2563eb;--green:#16a34a;--border:#e5e7eb}
+    *{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    main{max-width:760px;margin:auto;padding:18px 14px 42px}h1{margin:8px 0 4px;font-size:28px}h2{font-size:20px;margin:0 0 12px}.muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 8px 24px rgba(15,23,42,.08)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:14px}.stat strong{display:block;font-size:23px;margin-top:4px}
+    label{display:block;font-weight:700;margin:12px 0 6px}input,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:12px;font-size:16px;background:#fff}textarea{min-height:80px}
+    button{width:100%;border:0;border-radius:12px;padding:12px 15px;font-size:16px;font-weight:700;margin-top:10px}.primary{background:var(--accent);color:#fff}.success{background:var(--green);color:#fff}.secondary{background:#e8eefc;color:#1d4ed8}.danger{background:#fee2e2;color:#991b1b}
+    .row{display:flex;gap:10px}.row>div{flex:1}.history-item{border-top:1px solid var(--border);padding:12px 0}.history-item:first-child{border-top:0}.history-title{display:flex;justify-content:space-between;gap:10px;font-weight:700}.badge{background:#ecfdf5;color:#166534;border-radius:999px;padding:5px 9px;font-size:13px}.notice{display:none;border-radius:12px;padding:12px;margin-top:12px;font-weight:700}.notice.ok{display:block;background:#dcfce7;color:#166534}.notice.err{display:block;background:#fee2e2;color:#991b1b}.small{font-size:13px}
+    @media(max-width:560px){.row{flex-direction:column}}
+  </style>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div>
-        <p class="eyebrow">ACCOMPAGNEMENT QUOTIDIEN</p>
-        <h1>Mon Coach Poids</h1>
-      </div>
-      <button id="resetBtn" class="ghost small">Réinitialiser</button>
-    </header>
+<main>
+  <h1>Mon Coach Poids</h1>
+  <p class="muted">Suivi simple du poids, des calories et de l’activité.</p>
 
-    <main>
-      <section id="onboarding" class="panel">
-        <h2>Créer mon profil</h2>
-        <p class="muted">Ces informations permettent d’estimer un objectif calorique indicatif.</p>
-        <form id="profileForm" class="form-grid">
-          <label>Prénom
-            <input id="name" required placeholder="Ex. Sophie" />
-          </label>
-          <label>Âge
-            <input id="age" type="number" min="18" max="100" required value="40" />
-          </label>
-          <label>Sexe biologique
-            <select id="sex">
-              <option value="female">Femme</option>
-              <option value="male">Homme</option>
-            </select>
-          </label>
-          <label>Taille (cm)
-            <input id="height" type="number" min="130" max="220" required value="170" />
-          </label>
-          <label>Poids actuel (kg)
-            <input id="weight" type="number" min="40" max="250" step="0.1" required value="80" />
-          </label>
-          <label>Poids souhaité (kg)
-            <input id="targetWeight" type="number" min="40" max="250" step="0.1" required value="72" />
-          </label>
-          <label>Niveau d’activité
-            <select id="activity">
-              <option value="1.2">Peu actif</option>
-              <option value="1.375">Légèrement actif</option>
-              <option value="1.55" selected>Modérément actif</option>
-              <option value="1.725">Très actif</option>
-            </select>
-          </label>
-          <label>Objectif
-            <select id="goal">
-              <option value="loss">Perte de poids progressive</option>
-              <option value="maintain">Maintien du poids</option>
-            </select>
-          </label>
-          <button class="primary full" type="submit">Créer mon tableau de bord</button>
-        </form>
-        <p class="notice">Cette application fournit des estimations générales et ne remplace pas un avis médical.</p>
-      </section>
-
-      <section id="dashboard" class="hidden">
-        <div class="hero-card">
-          <div>
-            <p class="eyebrow">AUJOURD’HUI</p>
-            <h2 id="hello">Bonjour</h2>
-            <p id="goalMessage" class="muted"></p>
-          </div>
-          <div class="ring" id="calorieRing">
-            <span id="remainingCalories">0</span>
-            <small>kcal restantes</small>
-          </div>
-        </div>
-
-        <div class="stats-grid">
-          <article class="stat-card">
-            <span>Consommées</span>
-            <strong id="consumed">0 kcal</strong>
-          </article>
-          <article class="stat-card">
-            <span>Objectif</span>
-            <strong id="targetCalories">0 kcal</strong>
-          </article>
-          <article class="stat-card">
-            <span>Dernier poids</span>
-            <strong id="latestWeight">—</strong>
-          </article>
-          <article class="stat-card">
-            <span>Progression</span>
-            <strong id="progress">—</strong>
-          </article>
-        </div>
-
-        <div class="two-col">
-          <section class="panel">
-            <div class="section-head">
-              <div>
-                <p class="eyebrow">JOURNAL</p>
-                <h3>Ajouter un repas</h3>
-              </div>
-            </div>
-            <form id="mealForm" class="stack">
-              <label>Description du repas
-                <input id="mealName" required placeholder="Ex. salade avec poulet et pain" />
-              </label>
-              <label>Calories estimées
-                <input id="mealCalories" type="number" min="0" max="5000" required placeholder="Ex. 520" />
-              </label>
-              <label>Type de repas
-                <select id="mealType">
-                  <option>Petit-déjeuner</option>
-                  <option>Déjeuner</option>
-                  <option>Dîner</option>
-                  <option>Collation</option>
-                </select>
-              </label>
-              <button class="primary" type="submit">Ajouter</button>
-            </form>
-            <div id="mealList" class="list"></div>
-          </section>
-
-          <section class="panel">
-            <div class="section-head">
-              <div>
-                <p class="eyebrow">SUIVI</p>
-                <h3>Enregistrer mon poids</h3>
-              </div>
-            </div>
-            <form id="weightForm" class="stack">
-              <label>Poids du jour (kg)
-                <input id="newWeight" type="number" min="40" max="250" step="0.1" required />
-              </label>
-              <button class="secondary" type="submit">Enregistrer</button>
-            </form>
-            <div id="weightChart" class="chart"></div>
-          </section>
-        </div>
-
-        <section class="panel">
-          <div class="section-head">
-            <div>
-              <p class="eyebrow">COACH</p>
-              <h3>Bilan personnalisé</h3>
-            </div>
-            <button id="generateSummary" class="secondary">Générer le bilan</button>
-          </div>
-          <div id="summary" class="summary-box">
-            Ajoutez quelques repas et mesures de poids pour obtenir un premier bilan.
-          </div>
-        </section>
-      </section>
-    </main>
-
-    <footer>
-      <p>Prototype MVP — données enregistrées uniquement dans votre navigateur.</p>
-    </footer>
-  </div>
-
-  <script>
-
-const storeKey = "monCoachPoidsDataV1";
-
-const state = JSON.parse(localStorage.getItem(storeKey) || "null") || {
-  profile: null,
-  meals: [],
-  weights: []
-};
-
-const $ = (id) => document.getElementById(id);
-
-function save() {
-  localStorage.setItem(storeKey, JSON.stringify(state));
-}
-
-function today() {
-  return new Date().toISOString().slice(0, 10);
-}
-
-function estimateCalories(profile) {
-  const { sex, weight, height, age, activity, goal } = profile;
-  const base = sex === "male"
-    ? 10 * weight + 6.25 * height - 5 * age + 5
-    : 10 * weight + 6.25 * height - 5 * age - 161;
-  const maintenance = base * Number(activity);
-  const target = goal === "loss" ? maintenance - 400 : maintenance;
-  return Math.max(1200, Math.round(target / 10) * 10);
-}
-
-function todaysMeals() {
-  return state.meals.filter(m => m.date === today());
-}
-
-function render() {
-  const hasProfile = Boolean(state.profile);
-  $("onboarding").classList.toggle("hidden", hasProfile);
-  $("dashboard").classList.toggle("hidden", !hasProfile);
-  if (!hasProfile) return;
-
-  const target = estimateCalories(state.profile);
-  const consumed = todaysMeals().reduce((sum, meal) => sum + Number(meal.calories), 0);
-  const remaining = Math.max(0, target - consumed);
-  const pct = Math.min(100, Math.round(consumed / target * 100));
-  const latest = state.weights.at(-1)?.value ?? state.profile.weight;
-  const delta = Number(state.profile.weight) - Number(latest);
-
-  $("hello").textContent = `Bonjour ${state.profile.name}`;
-  $("goalMessage").textContent = state.profile.goal === "loss"
-    ? `Objectif : atteindre progressivement ${state.profile.targetWeight} kg`
-    : "Objectif : stabiliser votre poids dans la durée";
-  $("targetCalories").textContent = `${target} kcal`;
-  $("consumed").textContent = `${consumed} kcal`;
-  $("remainingCalories").textContent = remaining;
-  $("latestWeight").textContent = `${Number(latest).toFixed(1)} kg`;
-  $("progress").textContent = delta > 0
-    ? `-${delta.toFixed(1)} kg`
-    : delta < 0 ? `+${Math.abs(delta).toFixed(1)} kg` : "Stable";
-  $("calorieRing").style.background =
-    `conic-gradient(var(--accent) ${pct * 3.6}deg, var(--accent-soft) 0deg)`;
-
-  renderMeals();
-  renderWeights();
-}
-
-function renderMeals() {
-  const list = $("mealList");
-  const meals = todaysMeals();
-  if (!meals.length) {
-    list.innerHTML = `<p class="muted">Aucun repas enregistré aujourd’hui.</p>`;
-    return;
-  }
-  list.innerHTML = meals.map(meal => `
-    <div class="list-item">
-      <div>
-        <strong>${escapeHtml(meal.name)}</strong>
-        <small>${escapeHtml(meal.type)} · ${meal.calories} kcal</small>
-      </div>
-      <button class="icon-btn" aria-label="Supprimer" onclick="removeMeal('${meal.id}')">×</button>
+  <section class="card">
+    <h2>Tableau de bord</h2>
+    <div class="grid">
+      <div class="stat"><span class="muted">Profil</span><strong id="statName">—</strong></div>
+      <div class="stat"><span class="muted">Objectif calories</span><strong id="statGoal">—</strong></div>
+      <div class="stat"><span class="muted">Dernier poids</span><strong id="statWeight">—</strong></div>
+      <div class="stat"><span class="muted">Jours enregistrés</span><strong id="statDays">0</strong></div>
     </div>
-  `).join("");
+  </section>
+
+  <section class="card">
+    <h2>Importer l’historique</h2>
+    <p class="muted">Choisis le fichier JSON dans l’application Fichiers de l’iPhone.</p>
+    <input id="importFile" type="file" accept=".json,application/json">
+    <button class="primary" id="importBtn">Importer le fichier</button>
+    <div id="importNotice" class="notice"></div>
+  </section>
+
+  <section class="card">
+    <h2>Ajouter une journée</h2>
+    <div class="row">
+      <div><label for="date">Date</label><input id="date" type="date"></div>
+      <div><label for="weight">Poids (kg)</label><input id="weight" type="number" step="0.1" placeholder="67"></div>
+    </div>
+    <div class="row">
+      <div><label for="calories">Calories</label><input id="calories" type="number" placeholder="1450"></div>
+      <div><label for="activity">Activité</label><input id="activity" type="text" placeholder="Marche 1 heure"></div>
+    </div>
+    <label for="note">Note</label><textarea id="note" placeholder="Bonne journée, repas équilibrés…"></textarea>
+    <button class="success" id="saveDayBtn">Enregistrer la journée</button>
+  </section>
+
+  <section class="card"><h2>Historique</h2><div id="history"></div></section>
+
+  <section class="card">
+    <h2>Sauvegarde</h2>
+    <button class="secondary" id="exportBtn">Exporter mes données</button>
+    <button class="danger" id="resetBtn">Effacer toutes les données</button>
+    <p class="muted small">Les données restent enregistrées dans le navigateur de cet appareil.</p>
+  </section>
+</main>
+<script>
+const STORAGE_KEY='monCoachPoidsDataV2';
+const defaultData={version:1,profil:{prenom:'Thibault',poidsInitial:67,poidsObjectif:63,objectifCalories:1650,objectif:'perte'},historique:[]};
+function clone(v){return JSON.parse(JSON.stringify(v))}
+function loadData(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||clone(defaultData)}catch(e){return clone(defaultData)}}
+let data=loadData();
+function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data));render()}
+function normalizeImport(obj){
+  if(!obj||typeof obj!=='object')throw new Error('Fichier invalide.');
+  if(!obj.profil||!Array.isArray(obj.historique))throw new Error('Profil ou historique manquant.');
+  return {version:Number(obj.version||1),profil:{prenom:String(obj.profil.prenom||'Thibault'),poidsInitial:Number(obj.profil.poidsInitial||67),poidsObjectif:Number(obj.profil.poidsObjectif||63),objectifCalories:Number(obj.profil.objectifCalories||1650),objectif:String(obj.profil.objectif||'perte')},historique:obj.historique.map((x,i)=>({date:x.date||'',jour:Number(x.jour||i+1),poids:x.poids==null?null:Number(x.poids),calories:x.calories==null?null:Number(x.calories),activite:Array.isArray(x.activite)?x.activite.join(', '):String(x.activite||''),note:String(x.note||'')}))};
 }
-
-function renderWeights() {
-  const chart = $("weightChart");
-  const data = state.weights.slice(-10);
-  if (!data.length) {
-    chart.innerHTML = `<p class="muted">Aucune mesure enregistrée.</p>`;
-    return;
-  }
-  const values = data.map(x => Number(x.value));
-  const min = Math.min(...values) - 1;
-  const max = Math.max(...values) + 1;
-  chart.innerHTML = data.map(point => {
-    const height = 25 + ((Number(point.value) - min) / Math.max(1, max - min)) * 120;
-    return `
-      <div class="bar-wrap" title="${point.value} kg">
-        <div class="bar" style="height:${height}px"></div>
-        <div class="bar-label">${point.date.slice(5)}</div>
-      </div>
-    `;
-  }).join("");
+function importFile(){
+  const input=document.getElementById('importFile'),notice=document.getElementById('importNotice');notice.className='notice';
+  if(!input.files[0]){notice.className='notice err';notice.textContent='Choisis d’abord un fichier JSON.';return}
+  const reader=new FileReader();reader.onload=()=>{try{data=normalizeImport(JSON.parse(reader.result));saveData();notice.className='notice ok';notice.textContent=data.historique.length+' jours importés avec succès.';input.value=''}catch(e){notice.className='notice err';notice.textContent='Import impossible : '+e.message}};reader.readAsText(input.files[0]);
 }
-
-function escapeHtml(value) {
-  return String(value).replace(/[&<>"']/g, ch => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[ch]));
+function addDay(){
+  const date=document.getElementById('date').value;if(!date){alert('Choisis une date.');return}
+  const item={date,poids:document.getElementById('weight').value?Number(document.getElementById('weight').value):null,calories:document.getElementById('calories').value?Number(document.getElementById('calories').value):null,activite:document.getElementById('activity').value.trim(),note:document.getElementById('note').value.trim()};
+  const i=data.historique.findIndex(x=>x.date===date);if(i>=0)data.historique[i]=item;else data.historique.push(item);data.historique.sort((a,b)=>String(a.date).localeCompare(String(b.date)));saveData();
+  ['weight','calories','activity','note'].forEach(id=>document.getElementById(id).value='');
 }
-
-window.removeMeal = function(id) {
-  state.meals = state.meals.filter(m => m.id !== id);
-  save();
-  render();
-};
-
-$("profileForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-  state.profile = {
-    name: $("name").value.trim(),
-    age: Number($("age").value),
-    sex: $("sex").value,
-    height: Number($("height").value),
-    weight: Number($("weight").value),
-    targetWeight: Number($("targetWeight").value),
-    activity: Number($("activity").value),
-    goal: $("goal").value
-  };
-  state.weights = [{ date: today(), value: state.profile.weight }];
-  save();
-  render();
-});
-
-$("mealForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-  state.meals.push({
-    id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
-    name: $("mealName").value.trim(),
-    calories: Number($("mealCalories").value),
-    type: $("mealType").value,
-    date: today()
-  });
-  event.target.reset();
-  save();
-  render();
-});
-
-$("weightForm").addEventListener("submit", (event) => {
-  event.preventDefault();
-  const value = Number($("newWeight").value);
-  state.weights.push({ date: today(), value });
-  $("newWeight").value = "";
-  save();
-  render();
-});
-
-$("generateSummary").addEventListener("click", () => {
-  const target = estimateCalories(state.profile);
-  const last7 = state.meals.filter(m => {
-    const diff = (new Date() - new Date(m.date)) / 86400000;
-    return diff >= 0 && diff <= 7;
-  });
-  const avg = last7.length
-    ? Math.round(last7.reduce((s,m) => s + Number(m.calories), 0) / 7)
-    : 0;
-  const latest = Number(state.weights.at(-1)?.value ?? state.profile.weight);
-  const start = Number(state.profile.weight);
-  const delta = latest - start;
-
-  let text = "";
-  if (!last7.length) {
-    text += "Vous n’avez pas encore assez de repas enregistrés pour analyser votre alimentation. ";
-  } else if (avg < target * 0.7) {
-    text += "Votre apport enregistré semble très inférieur à votre objectif. Vérifiez que tous les repas ont bien été saisis et évitez les restrictions excessives. ";
-  } else if (avg <= target * 1.1) {
-    text += "Votre apport moyen est proche de votre objectif indicatif. Cette régularité est un bon point pour progresser sans approche trop restrictive. ";
-  } else {
-    text += "Votre apport moyen dépasse votre objectif indicatif. Cherchez d’abord un ajustement simple et durable, par exemple sur les boissons, les sauces ou les portions. ";
-  }
-
-  if (delta < -0.2) {
-    text += `Votre poids a diminué de ${Math.abs(delta).toFixed(1)} kg depuis le début. Continuez à observer la tendance sur plusieurs semaines plutôt qu’une mesure isolée.`;
-  } else if (delta > 0.2) {
-    text += `Votre poids a augmenté de ${delta.toFixed(1)} kg depuis le début. Une variation ponctuelle peut venir de l’hydratation, du sel ou du cycle digestif.`;
-  } else {
-    text += "Votre poids est actuellement stable. En phase de maintien, cette stabilité constitue déjà un résultat positif.";
-  }
-  $("summary").textContent = text;
-});
-
-$("resetBtn").addEventListener("click", () => {
-  if (confirm("Supprimer toutes les données enregistrées dans ce navigateur ?")) {
-    localStorage.removeItem(storeKey);
-    location.reload();
-  }
-});
-
-render();
-
+function deleteDay(i){if(confirm('Supprimer cette journée ?')){data.historique.splice(i,1);saveData()}}
+function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mon-coach-poids-sauvegarde.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function resetData(){if(confirm('Effacer toutes les données ?')){data=clone(defaultData);localStorage.removeItem(STORAGE_KEY);render()}}
+function esc(v){return String(v).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#039;')}
+function render(){
+  const p=data.profil||defaultData.profil,h=Array.isArray(data.historique)?data.historique:[];document.getElementById('statName').textContent=p.prenom||'—';document.getElementById('statGoal').textContent=p.objectifCalories?p.objectifCalories+' kcal':'—';document.getElementById('statDays').textContent=h.length;
+  const last=[...h].reverse().find(x=>Number.isFinite(Number(x.poids)));document.getElementById('statWeight').textContent=last?Number(last.poids).toFixed(1).replace('.',',')+' kg':Number(p.poidsInitial).toFixed(1).replace('.',',')+' kg';
+  const c=document.getElementById('history');if(!h.length){c.innerHTML='<p class="muted">Aucune journée enregistrée. Importe ton fichier ou ajoute une journée.</p>';return}
+  c.innerHTML=[...h].reverse().map((x,r)=>{const i=h.length-1-r,title=x.date||('Jour '+(x.jour||i+1)),cal=x.calories!=null?x.calories+' kcal':'Calories non renseignées',weight=x.poids!=null?Number(x.poids).toFixed(1).replace('.',',')+' kg':'';return `<div class="history-item"><div class="history-title"><span>${esc(title)}</span><span class="badge">${esc(cal)}</span></div><div>${esc(weight)}</div>${x.activite?'<div>🏃 '+esc(x.activite)+'</div>':''}${x.note?'<div class="muted">'+esc(x.note)+'</div>':''}<button class="danger small" onclick="deleteDay(${i})">Supprimer</button></div>`}).join('');
+}
+document.getElementById('importBtn').onclick=importFile;document.getElementById('saveDayBtn').onclick=addDay;document.getElementById('exportBtn').onclick=exportData;document.getElementById('resetBtn').onclick=resetData;document.getElementById('date').value=new Date().toISOString().slice(0,10);render();
 </script>
 </body>
 </html>
