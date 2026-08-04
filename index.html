@@ -3,96 +3,269 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111827">
+<meta name="theme-color" content="#166534">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Coach Poids">
 <title>Mon Coach Poids</title>
 <style>
-:root{--bg:#f4f6f8;--card:#fff;--text:#172033;--muted:#6b7280;--accent:#2563eb;--green:#16a34a;--border:#e5e7eb;--red:#dc2626}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
-main{max-width:860px;margin:auto;padding:18px 14px 42px}h1{margin:8px 0 4px;font-size:28px}h2{font-size:20px;margin:0 0 12px}h3{font-size:17px;margin:0 0 8px}
-.muted{color:var(--muted)}.small{font-size:13px}.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 8px 24px rgba(15,23,42,.08)}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.stat{background:#f8fafc;border:1px solid var(--border);border-radius:14px;padding:14px}.stat strong{display:block;font-size:20px;margin-top:4px}
-label{display:block;font-weight:700;margin:12px 0 6px}input,textarea{width:100%;border:1px solid #cbd5e1;border-radius:12px;padding:12px;font-size:16px;background:#fff}textarea{min-height:92px;resize:vertical}#globalJson{min-height:210px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px}
-button,.filebtn{width:100%;border:0;border-radius:12px;padding:12px 15px;font-size:16px;font-weight:700;margin-top:10px;cursor:pointer;text-align:center;display:block}.primary{background:var(--accent);color:#fff}.success{background:var(--green);color:#fff}.secondary{background:#e8eefc;color:#1d4ed8}.danger{background:#fee2e2;color:#991b1b}
-.meal{border:1px solid var(--border);border-radius:15px;padding:13px;margin-top:12px;background:#fbfdff}.meal-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.meal-cal{font-weight:800;color:#166534}.total{display:flex;justify-content:space-between;align-items:center;background:#eef6ff;border-radius:14px;padding:14px;margin-top:14px}.total strong{font-size:25px}
-.summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px}.summary div{background:#f8fafc;border-radius:10px;padding:10px}.notice{display:none;border-radius:12px;padding:12px;margin-top:12px;font-weight:700}.notice.ok{display:block;background:#dcfce7;color:#166534}.notice.err{display:block;background:#fee2e2;color:#991b1b}
-.history-item{border-top:1px solid var(--border);padding:14px 0}.history-item:first-child{border-top:0}.history-title{display:flex;justify-content:space-between;gap:10px;font-weight:800}.badge{background:#ecfdf5;color:#166534;border-radius:999px;padding:5px 9px;font-size:13px;white-space:nowrap}.archive-meals{padding:8px 0 0 10px;line-height:1.55}input[type=file]{display:none}
-@media(max-width:560px){.grid,.stats,.summary{grid-template-columns:1fr 1fr}.stat strong{font-size:18px}}
+:root{--bg:#f5f7f5;--card:#fff;--text:#17211b;--muted:#68756d;--green:#166534;--green2:#22c55e;--soft:#eaf5ed;--border:#dce5de;--danger:#b91c1c;--blue:#2563eb}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+.app{max-width:820px;margin:auto;padding:14px 14px 90px}
+header{padding:10px 2px 4px} h1{font-size:27px;margin:0} h2{font-size:21px;margin:0 0 14px} h3{font-size:17px;margin:0}
+.muted{color:var(--muted)} .small{font-size:13px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:16px;margin:14px 0;box-shadow:0 8px 24px rgba(23,33,27,.06)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+label{display:block;font-weight:700;margin:11px 0 6px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd5cf;border-radius:12px;background:#fff;font-size:16px}
+textarea{min-height:94px;resize:vertical}
+button,.button{border:0;border-radius:12px;padding:12px 14px;font-weight:800;font-size:16px;width:100%;margin-top:10px;display:block;text-align:center;cursor:pointer}
+.primary{background:var(--green);color:#fff}.secondary{background:var(--soft);color:var(--green)}.blue{background:#e8efff;color:#1d4ed8}.danger{background:#fee2e2;color:var(--danger)}
+.tabs{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--border);display:flex;z-index:30;padding-bottom:env(safe-area-inset-bottom)}
+.tab-btn{flex:1;border:0;background:#fff;padding:12px 4px 10px;font-size:13px;font-weight:800;color:var(--muted)}
+.tab-btn.active{color:var(--green);background:#f0faf3}
+.tab{display:none}.tab.active{display:block}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:#f8faf8;border:1px solid var(--border);border-radius:14px;padding:13px}
+.stat span{display:block;font-size:13px;color:var(--muted)}.stat strong{display:block;font-size:21px;margin-top:5px}
+.meal{border:1px solid var(--border);border-radius:16px;padding:13px;margin-top:13px;background:#fbfdfb}
+.meal-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.meal-total{font-weight:900;color:var(--green)}
+.photo-row{display:flex;gap:8px;overflow:auto;margin-top:10px}
+.photo-row img{width:82px;height:82px;border-radius:10px;object-fit:cover;border:1px solid var(--border)}
+.file-input{display:none}
+.preview-label{background:#eef2ff;color:#3730a3}
+.notice{display:none;padding:12px;border-radius:12px;margin-top:10px;font-weight:700}
+.notice.ok{display:block;background:#dcfce7;color:#166534}.notice.err{display:block;background:#fee2e2;color:#991b1b}
+.history-item{border-top:1px solid var(--border);padding:13px 0}.history-item:first-child{border-top:0}
+.history-title{display:flex;justify-content:space-between;gap:10px;font-weight:800}
+.badge{background:#dcfce7;color:#166534;padding:5px 8px;border-radius:999px;white-space:nowrap;font-size:13px}
+details{margin-top:8px}.detail{line-height:1.55;padding:8px 0}
+.progress{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:var(--green2);width:0}
+@media(max-width:560px){.grid,.stats{grid-template-columns:1fr 1fr}.stat strong{font-size:18px}}
 </style>
 </head>
 <body>
-<main>
-<h1>Mon Coach Poids</h1><p class="muted">Suivi alimentaire de Thibault — import JSON, historique et sauvegarde.</p>
-<section class="card"><h2>Tableau de bord de Thibault</h2><div class="stats">
-<div class="stat"><span class="muted">🎯 Objectif calories</span><strong id="goal">1 650 kcal</strong></div>
-<div class="stat"><span class="muted">🔥 Moyenne calories (5 jours)</span><strong id="avgCalories">—</strong></div>
-<div class="stat"><span class="muted">💪 Moyenne protéines</span><strong id="avgProtein">—</strong></div>
-<div class="stat"><span class="muted">🥦 Moyenne légumes</span><strong id="avgVeg">—</strong></div>
-<div class="stat"><span class="muted">🍚 Moyenne féculents</span><strong id="avgStarch">—</strong></div>
-<div class="stat"><span class="muted">🍎 Moyenne fruits</span><strong id="avgFruit">—</strong></div>
-<div class="stat"><span class="muted">💧 Moyenne eau</span><strong id="avgWater">—</strong></div>
-<div class="stat"><span class="muted">🚶 Moyenne activité</span><strong id="avgActivity">—</strong></div>
-<div class="stat"><span class="muted">⚖️ Dernier poids</span><strong id="lastWeight">—</strong></div>
-<div class="stat"><span class="muted">📅 Nombre de jours</span><strong id="dayCount">0</strong></div>
-</div></section>
+<div class="app">
+<header><h1>Mon Coach Poids</h1><p class="muted">Profil, repas et bilan en trois écrans.</p></header>
 
-<section class="card"><h2>Importer une journée depuis ChatGPT</h2><p class="muted">Colle le JSON complet de la journée, même s’il est entouré de ```.</p><textarea id="globalJson" placeholder='{"date":"2026-07-27","poids":66.8,"matin":{"description":"Skyr et avoine","calories":350,"proteines":25,"legumes":0,"feculents":40,"fruits":120},"midi":{"description":"Poulet, riz et légumes","calories":650,"proteines":45,"legumes":200,"feculents":150,"fruits":0},"soir":{"description":"Omelette et salade","calories":520,"proteines":32,"legumes":180,"feculents":100,"fruits":0},"eau":2.2,"activite":{"type":"Marche","duree":60,"caloriesBrulees":250}}'></textarea><button class="primary" id="parseBtn">Remplir ma journée</button><div id="jsonNotice" class="notice"></div></section>
+<section id="profileTab" class="tab active">
+  <div class="card">
+    <h2>Mon profil</h2>
+    <div class="grid">
+      <div><label>Prénom</label><input id="firstName" value="Thibault"></div>
+      <div><label>Nom</label><input id="lastName"></div>
+      <div><label>Âge</label><input id="age" type="number" min="18" max="100"></div>
+      <div><label>Sexe biologique</label><select id="sex"><option value="male">Homme</option><option value="female">Femme</option></select></div>
+      <div><label>Taille (cm)</label><input id="height" type="number" min="130" max="220"></div>
+      <div><label>Poids actuel (kg)</label><input id="currentWeight" type="number" step="0.1"></div>
+      <div><label>Poids objectif (kg)</label><input id="targetWeight" type="number" step="0.1"></div>
+      <div><label>Niveau d’activité</label>
+        <select id="activityLevel">
+          <option value="1.2">Peu actif</option>
+          <option value="1.375">Légèrement actif</option>
+          <option value="1.55">Modérément actif</option>
+          <option value="1.725">Très actif</option>
+        </select>
+      </div>
+    </div>
+    <button class="primary" id="saveProfile">Calculer et enregistrer</button>
+    <div id="profileNotice" class="notice"></div>
+  </div>
 
-<section class="card"><h2>Journée en cours</h2><div class="grid"><div><label>Date</label><input id="date" type="date"></div><div><label>Poids (kg)</label><input id="weight" type="number" step="0.1" min="0"></div></div>
-<div id="meals"></div>
-<div class="meal"><h3>💧 Eau et 🚶 activité</h3><div class="grid"><div><label>Eau (L)</label><input id="water" type="number" step="0.1" min="0"></div><div><label>Type d’activité</label><input id="activityType" type="text"></div><div><label>Durée (min)</label><input id="activityDuration" type="number" min="0"></div><div><label>Calories brûlées</label><input id="activityBurned" type="number" min="0"></div></div></div>
-<div class="total"><span>Total de la journée</span><strong><span id="totalCalories">0</span> kcal</strong></div><div class="summary"><div>💪 <strong id="totalProtein">0 g</strong></div><div>🥦 <strong id="totalVeg">0 g</strong></div><div>🍚 <strong id="totalStarch">0 g</strong></div><div>🍎 <strong id="totalFruit">0 g</strong></div><div>💧 <strong id="totalWater">0 L</strong></div><div>🚶 <strong id="totalActivity">0 min</strong></div></div>
-<button class="success" id="saveBtn">Enregistrer la journée en cours</button><button class="secondary" id="archiveBtn">Archiver maintenant</button><p class="muted small">À minuit, la journée est archivée automatiquement si l’application est ouverte. Sinon, elle est archivée à la prochaine ouverture.</p><div id="saveNotice" class="notice"></div></section>
+  <div class="card">
+    <h2>Mes indicateurs</h2>
+    <div class="stats">
+      <div class="stat"><span>IMC actuel</span><strong id="bmiNow">—</strong></div>
+      <div class="stat"><span>IMC objectif</span><strong id="bmiTarget">—</strong></div>
+      <div class="stat"><span>Poids à perdre</span><strong id="weightGap">—</strong></div>
+      <div class="stat"><span>Maintien estimé</span><strong id="maintenanceCalories">—</strong></div>
+      <div class="stat"><span>Objectif quotidien</span><strong id="targetCaloriesDisplay">—</strong></div>
+      <div class="stat"><span>Dernier poids</span><strong id="latestWeight">—</strong></div>
+    </div>
+    <p class="muted small">Calculs indicatifs, non médicaux.</p>
+  </div>
+</section>
 
-<section class="card"><h2>Historique</h2><div id="history"></div></section>
-<section class="card"><h2>Import / export</h2><button class="secondary" id="exportBtn">Exporter toutes mes données</button><label class="filebtn secondary" for="backupFile">Importer une sauvegarde JSON</label><input id="backupFile" type="file" accept=".json,application/json"><button class="danger" id="resetBtn">Effacer toutes les données</button><div id="backupNotice" class="notice"></div></section>
-</main>
+<section id="mealsTab" class="tab">
+  <div class="card">
+    <h2>Analyser mes repas avec ChatGPT</h2>
+    <textarea id="globalText" placeholder="Décris ici les repas du matin, du midi et du soir."></textarea>
+    <label class="button preview-label" for="globalPhotos">Ajouter des photos</label>
+    <input class="file-input" id="globalPhotos" type="file" accept="image/*" multiple>
+    <div id="globalPreview" class="photo-row"></div>
+    <button class="blue" id="openChatGPT">Copier la consigne et ouvrir ChatGPT</button>
+    <p class="muted small">Ajoute ensuite les mêmes photos dans ChatGPT, colle la consigne et récupère le JSON.</p>
+  </div>
+
+  <div class="card">
+    <h2>Coller le résultat de ChatGPT</h2>
+    <textarea id="jsonInput" placeholder="Colle ici le JSON reçu de ChatGPT"></textarea>
+    <button class="primary" id="importDayJson">Remplir les repas</button>
+    <div id="jsonNotice" class="notice"></div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div><label>Date</label><input id="dayDate" type="date"></div>
+      <div><label>Poids du jour (kg)</label><input id="dayWeight" type="number" step="0.1"></div>
+    </div>
+    <div id="mealBlocks"></div>
+    <button class="secondary" id="saveCurrentDay">Enregistrer sans archiver</button>
+    <button class="primary" id="archiveDay">Valider et archiver la journée</button>
+    <div id="mealNotice" class="notice"></div>
+  </div>
+</section>
+
+<section id="reportTab" class="tab">
+  <div class="card">
+    <h2>Bilan de la journée</h2>
+    <div class="stats">
+      <div class="stat"><span>Calories</span><strong id="todayCalories">0 kcal</strong></div>
+      <div class="stat"><span>Objectif</span><strong id="todayGoal">—</strong></div>
+      <div class="stat"><span>Protéines</span><strong id="todayProtein">0 g</strong></div>
+      <div class="stat"><span>Légumes</span><strong id="todayVeg">0 g</strong></div>
+      <div class="stat"><span>Féculents</span><strong id="todayStarch">0 g</strong></div>
+      <div class="stat"><span>Fruits</span><strong id="todayFruit">0 g</strong></div>
+    </div>
+    <p class="muted small" id="calorieMessage"></p>
+    <div class="progress"><div id="calorieProgress"></div></div>
+  </div>
+
+  <div class="card">
+    <h2>Moyenne des 10 derniers jours</h2>
+    <p class="muted small" id="averageInfo"></p>
+    <div class="stats">
+      <div class="stat"><span>Calories</span><strong id="avgCalories">—</strong></div>
+      <div class="stat"><span>Protéines</span><strong id="avgProtein">—</strong></div>
+      <div class="stat"><span>Légumes</span><strong id="avgVeg">—</strong></div>
+      <div class="stat"><span>Féculents</span><strong id="avgStarch">—</strong></div>
+      <div class="stat"><span>Fruits</span><strong id="avgFruit">—</strong></div>
+      <div class="stat"><span>Poids moyen</span><strong id="avgWeight">—</strong></div>
+    </div>
+  </div>
+
+  <div class="card"><h2>Historique</h2><div id="history"></div></div>
+
+  <div class="card">
+    <h2>Sauvegarde</h2>
+    <button class="secondary" id="exportData">Exporter mes données</button>
+    <label class="button secondary" for="importBackup">Importer une sauvegarde</label>
+    <input class="file-input" id="importBackup" type="file" accept=".json,application/json">
+    <button class="danger" id="resetData">Effacer toutes les données</button>
+    <div id="backupNotice" class="notice"></div>
+  </div>
+</section>
+</div>
+
+<nav class="tabs">
+<button class="tab-btn active" data-tab="profileTab">👤<br>Profil</button>
+<button class="tab-btn" data-tab="mealsTab">🍽️<br>Repas</button>
+<button class="tab-btn" data-tab="reportTab">📊<br>Bilan</button>
+</nav>
+
 <script>
-'use strict';
-const STORAGE='monCoachPoidsDataV6';
-const LEGACY=['monCoachPoidsDataV5','monCoachPoidsDataV4','monCoachPoidsDataV3','monCoachPoidsDataV2'];
-const mealDefs=[['matin','☀️ Matin'],['midi','🍽️ Midi'],['soir','🌙 Soir']];
-const fields=[['calories','Calories'],['proteines','Protéines (g)'],['legumes','Légumes (g)'],['feculents','Féculents (g)'],['fruits','Fruits (g)']];
-const n=v=>{const x=Number(v);return Number.isFinite(x)?x:0};
-const clone=v=>JSON.parse(JSON.stringify(v));
-function today(d=new Date()){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-')}
-function blankMeal(){return{description:'',calories:0,proteines:0,legumes:0,feculents:0,fruits:0}}
-function blankDay(date=today()){return{date,poids:null,matin:blankMeal(),midi:blankMeal(),soir:blankMeal(),eau:0,activite:{type:'',duree:0,caloriesBrulees:0}}}
-const defaults={version:6,profil:{prenom:'Thibault',objectifCalories:1650,objectifPoids:63},jourEnCours:blankDay(),historique:[]};
-function normMeal(v){if(typeof v==='string')return{...blankMeal(),description:v};v=v||{};return{description:String(v.description||v.texte||v.repas||''),calories:n(v.calories??v.kcal),proteines:n(v.proteines??v.protein),legumes:n(v.legumes??v.vegetables),feculents:n(v.feculents??v.starches),fruits:n(v.fruits??v.fruit)}}
-function normDay(v,fallback=today()){v=v||{};const meals=v.repas||v,tot=v.totaux||{},a=v.activite||{};const d={date:v.date||fallback,poids:(v.poids===undefined||v.poids===null||v.poids==='')?null:n(v.poids),matin:normMeal(meals.matin||meals.petitDejeuner||meals['petit-déjeuner']),midi:normMeal(meals.midi||meals.dejeuner||meals['déjeuner']),soir:normMeal(meals.soir||meals.diner||meals['dîner']),eau:n(v.eau??tot.eau),activite:{type:String(a.type||a.description||''),duree:n(a.duree??a.minutes),caloriesBrulees:n(a.caloriesBrulees??a.calories)}};if(total(d)===0&&n(v.calories)>0)d.matin.calories=n(v.calories);return d}
-function normData(v){v=v||{};const h=(Array.isArray(v.historique)?v.historique:[]).map((x,i)=>Object.assign(normDay(x,x.date||''),{jour:n(x.jour)||i+1})).sort((a,b)=>String(a.date).localeCompare(String(b.date)));h.forEach((x,i)=>x.jour=i+1);return{version:6,profil:{prenom:String(v.profil?.prenom||'Thibault'),objectifCalories:n(v.profil?.objectifCalories)||1650,objectifPoids:n(v.profil?.objectifPoids)||63},jourEnCours:normDay(v.jourEnCours||blankDay()),historique:h}}
-function load(){try{const x=localStorage.getItem(STORAGE);if(x)return normData(JSON.parse(x));for(const k of LEGACY){const y=localStorage.getItem(k);if(y)return normData(JSON.parse(y))}}catch(e){console.error(e)}return clone(defaults)}
+const KEY='coachPoidsSimpleV2';
+const mealMap={morning:['☀️','Matin'],lunch:['🍽️','Midi'],dinner:['🌙','Soir']};
+
+function todayLocal(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function emptyMeal(){return {description:'',calories:0,proteines:0,legumes:0,feculents:0,fruits:0}}
+function emptyDay(date=todayLocal()){return {date,poids:null,morning:emptyMeal(),lunch:emptyMeal(),dinner:emptyMeal()}}
+const defaults={profile:{firstName:'Thibault',lastName:'',age:'',sex:'male',height:'',currentWeight:'',targetWeight:'',activityLevel:'1.55',targetCalories:null,maintenanceCalories:null},currentDay:emptyDay(),history:[]};
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function load(){try{return Object.assign(clone(defaults),JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return clone(defaults)}}
 let data=load();
-function persist(){localStorage.setItem(STORAGE,JSON.stringify(data))}
-function total(d){return mealDefs.reduce((s,[k])=>s+n(d?.[k]?.calories),0)}
-function sum(d,key){return mealDefs.reduce((s,[k])=>s+n(d?.[k]?.[key]),0)}
-function hasData(d){return total(d)>0||d.poids!==null||n(d.eau)>0||n(d.activite?.duree)>0||mealDefs.some(([k])=>String(d[k]?.description||'').trim())}
-function archive(d,force=false){if(!force&&!hasData(d))return false;const item=Object.assign(normDay(d),{jour:0});const i=data.historique.findIndex(x=>x.date===item.date);if(i>=0)data.historique[i]=item;else data.historique.push(item);data.historique.sort((a,b)=>String(a.date).localeCompare(String(b.date)));data.historique.forEach((x,j)=>x.jour=j+1);return true}
-function autoArchive(){if(data.jourEnCours.date!==today()){archive(data.jourEnCours);data.jourEnCours=blankDay();persist();render()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function n(v){const x=Number(v);return Number.isFinite(x)?x:0}
 function fmt(v,d=0){return n(v).toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d})}
-function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-function buildMeals(){document.getElementById('meals').innerHTML=mealDefs.map(([k,title])=>`<div class="meal"><div class="meal-head"><h3>${title}</h3><span class="meal-cal"><span id="${k}-label">0</span> kcal</span></div><textarea id="${k}-description" placeholder="Description du repas"></textarea><div class="grid">${fields.map(([f,l])=>`<div><label>${l}</label><input id="${k}-${f}" type="number" min="0" step="1"></div>`).join('')}</div></div>`).join('')}
-function setForm(d){document.getElementById('date').value=d.date||today();document.getElementById('weight').value=d.poids===null?'':d.poids;mealDefs.forEach(([k])=>{document.getElementById(k+'-description').value=d[k].description||'';fields.forEach(([f])=>document.getElementById(k+'-'+f).value=n(d[k][f]))});document.getElementById('water').value=n(d.eau);document.getElementById('activityType').value=d.activite?.type||'';document.getElementById('activityDuration').value=n(d.activite?.duree);document.getElementById('activityBurned').value=n(d.activite?.caloriesBrulees);updateTotals()}
-function readForm(){const d={date:document.getElementById('date').value||today(),poids:document.getElementById('weight').value===''?null:n(document.getElementById('weight').value),eau:n(document.getElementById('water').value),activite:{type:document.getElementById('activityType').value.trim(),duree:n(document.getElementById('activityDuration').value),caloriesBrulees:n(document.getElementById('activityBurned').value)}};mealDefs.forEach(([k])=>{d[k]={description:document.getElementById(k+'-description').value.trim()};fields.forEach(([f])=>d[k][f]=n(document.getElementById(k+'-'+f).value))});return d}
-function updateTotals(){const d=readForm();mealDefs.forEach(([k])=>document.getElementById(k+'-label').textContent=fmt(d[k].calories));document.getElementById('totalCalories').textContent=fmt(total(d));document.getElementById('totalProtein').textContent=fmt(sum(d,'proteines'))+' g';document.getElementById('totalVeg').textContent=fmt(sum(d,'legumes'))+' g';document.getElementById('totalStarch').textContent=fmt(sum(d,'feculents'))+' g';document.getElementById('totalFruit').textContent=fmt(sum(d,'fruits'))+' g';document.getElementById('totalWater').textContent=fmt(d.eau,1)+' L';document.getElementById('totalActivity').textContent=fmt(d.activite.duree)+' min'}
-function average(days,getter){if(!days.length)return null;return days.reduce((s,d)=>s+getter(d),0)/days.length}
-function stat(id,val,unit,d=0){document.getElementById(id).textContent=val===null?'—':fmt(val,d)+' '+unit}
-function renderDashboard(){const last=data.historique.slice(-5);document.getElementById('goal').textContent=fmt(data.profil.objectifCalories)+' kcal';stat('avgCalories',average(last,total),'kcal');stat('avgProtein',average(last,d=>sum(d,'proteines')),'g');stat('avgVeg',average(last,d=>sum(d,'legumes')),'g');stat('avgStarch',average(last,d=>sum(d,'feculents')),'g');stat('avgFruit',average(last,d=>sum(d,'fruits')),'g');stat('avgWater',average(last,d=>n(d.eau)),'L',1);stat('avgActivity',average(last,d=>n(d.activite?.duree)),'min');const w=[...data.historique].reverse().map(x=>x.poids).find(x=>x!==null);document.getElementById('lastWeight').textContent=w===undefined?'—':fmt(w,1)+' kg';document.getElementById('dayCount').textContent=data.historique.length}
-function renderHistory(){const el=document.getElementById('history');if(!data.historique.length){el.innerHTML='<p class="muted">Aucune journée archivée.</p>';return}el.innerHTML=[...data.historique].reverse().map((d,r)=>{const idx=data.historique.length-1-r;return `<div class="history-item"><div class="history-title"><span>Jour ${d.jour} — ${esc(d.date)}</span><span class="badge">${fmt(total(d))} kcal</span></div><div class="summary"><div>💪 ${fmt(sum(d,'proteines'))} g</div><div>🥦 ${fmt(sum(d,'legumes'))} g</div><div>🍚 ${fmt(sum(d,'feculents'))} g</div><div>🍎 ${fmt(sum(d,'fruits'))} g</div><div>💧 ${fmt(d.eau,1)} L</div><div>🚶 ${fmt(d.activite?.duree)} min</div></div><details><summary>Voir le détail</summary><div class="archive-meals"><div><strong>Poids :</strong> ${d.poids===null?'—':fmt(d.poids,1)+' kg'}</div>${mealDefs.map(([k,t])=>`<div><strong>${t} :</strong> ${esc(d[k].description||'—')} (${fmt(d[k].calories)} kcal)</div>`).join('')}<div><strong>Activité :</strong> ${esc(d.activite?.type||'—')} — ${fmt(d.activite?.duree)} min — ${fmt(d.activite?.caloriesBrulees)} kcal brûlées</div></div></details><button class="danger" onclick="deleteDay(${idx})">Supprimer</button></div>`}).join('')}
-function render(){renderDashboard();setForm(data.jourEnCours);renderHistory()}
-function extractJSON(t){const c=t.trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'');const a=c.indexOf('{'),b=c.lastIndexOf('}');if(a<0||b<a)throw new Error('Aucun objet JSON détecté');return JSON.parse(c.slice(a,b+1))}
-function notice(id,msg,ok=true){const e=document.getElementById(id);e.className='notice '+(ok?'ok':'err');e.textContent=msg}
-document.getElementById('parseBtn').onclick=()=>{try{const x=extractJSON(document.getElementById('globalJson').value);data.jourEnCours=normDay(x.journee||x.jourEnCours||x);persist();render();notice('jsonNotice','Journée importée avec succès.')}catch(e){notice('jsonNotice','JSON invalide : '+e.message,false)}};
-document.getElementById('saveBtn').onclick=()=>{data.jourEnCours=readForm();persist();renderDashboard();notice('saveNotice','Journée enregistrée sur cet appareil.')};
-document.getElementById('archiveBtn').onclick=()=>{data.jourEnCours=readForm();archive(data.jourEnCours,true);data.jourEnCours=blankDay();persist();render();notice('saveNotice','Journée archivée dans l’historique.')};
-document.getElementById('exportBtn').onclick=()=>{data.jourEnCours=readForm();persist();const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download='mon-coach-poids-sauvegarde.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)};
-document.getElementById('backupFile').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const imported=normData(JSON.parse(r.result));if(confirm('Remplacer les données actuelles par cette sauvegarde ?')){data=imported;persist();render();notice('backupNotice','Sauvegarde importée avec succès.')}}catch(err){notice('backupNotice','Fichier invalide : '+err.message,false)}};r.readAsText(f);e.target.value=''};
-document.getElementById('resetBtn').onclick=()=>{if(confirm('Effacer toutes les données ?')){data=clone(defaults);LEGACY.concat(STORAGE).forEach(k=>localStorage.removeItem(k));persist();render()}};
-window.deleteDay=i=>{if(confirm('Supprimer cette journée ?')){data.historique.splice(i,1);data.historique.forEach((x,j)=>x.jour=j+1);persist();render()}};
-document.addEventListener('input',e=>{if(e.target.matches('#date,#weight,#water,#activityType,#activityDuration,#activityBurned,#meals input,#meals textarea'))updateTotals()});
-document.addEventListener('change',e=>{if(e.target.matches('#date,#weight,#water,#activityType,#activityDuration,#activityBurned,#meals input,#meals textarea')){data.jourEnCours=readForm();persist()}});
-buildMeals();autoArchive();render();setInterval(autoArchive,60000);
+function bmi(w,h){return h>0?w/Math.pow(h/100,2):0}
+function maintenance(p){const w=n(p.currentWeight),h=n(p.height),a=n(p.age),f=n(p.activityLevel)||1.2;if(!w||!h||!a)return 0;const b=p.sex==='female'?(10*w+6.25*h-5*a-161):(10*w+6.25*h-5*a+5);return Math.round((b*f)/10)*10}
+function mealTotal(day,key){return ['morning','lunch','dinner'].reduce((s,m)=>s+n(day[m]?.[key]),0)}
+function dayCalories(day){return mealTotal(day,'calories')}
+function normalizeMeal(v){return {description:String(v?.description||''),calories:n(v?.calories),proteines:n(v?.proteines),legumes:n(v?.legumes),feculents:n(v?.feculents),fruits:n(v?.fruits)}}
+function normalizeDay(v){const src=v?.journee||v||{},m=src.repas||src;return {date:src.date||todayLocal(),poids:src.poids===undefined||src.poids===null||src.poids===''?null:n(src.poids),morning:normalizeMeal(m.matin||m.morning),lunch:normalizeMeal(m.midi||m.dejeuner||m.lunch),dinner:normalizeMeal(m.soir||m.diner||m.dinner)}}
+
+function renderMealBlocks(){
+ document.getElementById('mealBlocks').innerHTML=Object.entries(mealMap).map(([k,v])=>`
+ <div class="meal">
+  <div class="meal-head"><h3>${v[0]} ${v[1]}</h3><span class="meal-total"><span id="${k}Total">0</span> kcal</span></div>
+  <label>Description</label><textarea id="${k}Description"></textarea>
+  <div class="grid">
+   <div><label>Calories</label><input id="${k}Calories" type="number" min="0"></div>
+   <div><label>Protéines (g)</label><input id="${k}Proteines" type="number" min="0"></div>
+   <div><label>Légumes (g)</label><input id="${k}Legumes" type="number" min="0"></div>
+   <div><label>Féculents (g)</label><input id="${k}Feculents" type="number" min="0"></div>
+   <div><label>Fruits (g)</label><input id="${k}Fruits" type="number" min="0"></div>
+  </div>
+ </div>`).join('')
+}
+function readDayForm(){
+ const d={date:document.getElementById('dayDate').value||todayLocal(),poids:document.getElementById('dayWeight').value===''?null:n(document.getElementById('dayWeight').value)};
+ Object.keys(mealMap).forEach(k=>d[k]={description:document.getElementById(k+'Description').value.trim(),calories:n(document.getElementById(k+'Calories').value),proteines:n(document.getElementById(k+'Proteines').value),legumes:n(document.getElementById(k+'Legumes').value),feculents:n(document.getElementById(k+'Feculents').value),fruits:n(document.getElementById(k+'Fruits').value)});
+ return d
+}
+function fillDayForm(day){
+ document.getElementById('dayDate').value=day.date||todayLocal();document.getElementById('dayWeight').value=day.poids===null?'':day.poids;
+ Object.keys(mealMap).forEach(k=>{const m=day[k]||emptyMeal();document.getElementById(k+'Description').value=m.description||'';['Calories','Proteines','Legumes','Feculents','Fruits'].forEach(f=>document.getElementById(k+f).value=n(m[f.toLowerCase()]))});
+ updateDayTotals()
+}
+function saveProfile(){
+ const p=data.profile;['firstName','lastName','age','sex','height','currentWeight','targetWeight','activityLevel'].forEach(id=>p[id]=document.getElementById(id).value);
+ p.maintenanceCalories=maintenance(p);p.targetCalories=Math.max(1200,Math.round((p.maintenanceCalories-400)/10)*10);if(n(p.targetWeight)>=n(p.currentWeight))p.targetCalories=p.maintenanceCalories;
+ save();renderProfile();const no=document.getElementById('profileNotice');no.className='notice ok';no.textContent='Profil enregistré.'
+}
+function renderProfile(){
+ const p=data.profile;['firstName','lastName','age','sex','height','currentWeight','targetWeight','activityLevel'].forEach(id=>document.getElementById(id).value=p[id]??'');
+ const b1=bmi(n(p.currentWeight),n(p.height)),b2=bmi(n(p.targetWeight),n(p.height));
+ document.getElementById('bmiNow').textContent=b1?fmt(b1,1):'—';document.getElementById('bmiTarget').textContent=b2?fmt(b2,1):'—';
+ document.getElementById('weightGap').textContent=n(p.currentWeight)&&n(p.targetWeight)?fmt(Math.max(0,n(p.currentWeight)-n(p.targetWeight)),1)+' kg':'—';
+ document.getElementById('maintenanceCalories').textContent=p.maintenanceCalories?fmt(p.maintenanceCalories)+' kcal':'—';
+ document.getElementById('targetCaloriesDisplay').textContent=p.targetCalories?fmt(p.targetCalories)+' kcal':'—';
+ const last=[...data.history].reverse().find(x=>x.poids!==null);document.getElementById('latestWeight').textContent=last?fmt(last.poids,1)+' kg':(p.currentWeight?fmt(p.currentWeight,1)+' kg':'—')
+}
+function extractJson(t){const c=t.trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'');const a=c.indexOf('{'),b=c.lastIndexOf('}');if(a<0||b<a)throw new Error('Aucun JSON détecté');return JSON.parse(c.slice(a,b+1))}
+function buildPrompt(){
+ return `Analyse mes repas à partir de mon texte et des photos que je vais joindre. Réponds uniquement avec un JSON valide :
+{"date":"${todayLocal()}","poids":null,"matin":{"description":"","calories":0,"proteines":0,"legumes":0,"feculents":0,"fruits":0},"midi":{"description":"","calories":0,"proteines":0,"legumes":0,"feculents":0,"fruits":0},"soir":{"description":"","calories":0,"proteines":0,"legumes":0,"feculents":0,"fruits":0}}
+Calories en kcal. Protéines, légumes, féculents et fruits en grammes. Texte : ${document.getElementById('globalText').value.trim()||'Analyse surtout les photos.'}`
+}
+async function openChatGPT(){const p=buildPrompt();try{await navigator.clipboard.writeText(p);alert('Consigne copiée. Ajoute les photos dans ChatGPT puis colle la consigne.')}catch(e){window.prompt('Copie cette consigne :',p)}window.open('https://chatgpt.com/','_blank')}
+function importDayJson(){const no=document.getElementById('jsonNotice');try{data.currentDay=normalizeDay(extractJson(document.getElementById('jsonInput').value));save();fillDayForm(data.currentDay);no.className='notice ok';no.textContent='Repas remplis. Vérifie les estimations.'}catch(e){no.className='notice err';no.textContent='Import impossible : '+e.message}}
+function saveCurrent(){data.currentDay=readDayForm();save();const n1=document.getElementById('mealNotice');n1.className='notice ok';n1.textContent='Journée enregistrée.'}
+function archiveCurrent(){const day=readDayForm(),i=data.history.findIndex(x=>x.date===day.date);if(i>=0)data.history[i]=day;else data.history.push(day);data.history.sort((a,b)=>a.date.localeCompare(b.date));data.currentDay=emptyDay();save();fillDayForm(data.currentDay);renderAll();const n1=document.getElementById('mealNotice');n1.className='notice ok';n1.textContent='Journée archivée.'}
+function average(days,getter){const v=days.map(getter).filter(x=>x!==null&&Number.isFinite(Number(x)));return v.length?v.reduce((s,x)=>s+n(x),0)/v.length:null}
+function renderReport(day=data.currentDay){
+ const goal=n(data.profile.targetCalories),cal=dayCalories(day);
+ document.getElementById('todayCalories').textContent=fmt(cal)+' kcal';document.getElementById('todayGoal').textContent=goal?fmt(goal)+' kcal':'—';
+ document.getElementById('todayProtein').textContent=fmt(mealTotal(day,'proteines'))+' g';document.getElementById('todayVeg').textContent=fmt(mealTotal(day,'legumes'))+' g';document.getElementById('todayStarch').textContent=fmt(mealTotal(day,'feculents'))+' g';document.getElementById('todayFruit').textContent=fmt(mealTotal(day,'fruits'))+' g';
+ document.getElementById('calorieProgress').style.width=(goal?Math.min(100,cal/goal*100):0)+'%';document.getElementById('calorieMessage').textContent=goal?(cal<=goal?`Il reste environ ${fmt(goal-cal)} kcal.`:`Dépassement indicatif : ${fmt(cal-goal)} kcal.`):'Complète ton profil.';
+ const last=data.history.slice(-10);document.getElementById('averageInfo').textContent=last.length?`Moyenne calculée sur ${last.length} journée${last.length>1?'s':''}.`:'Aucune journée archivée.';
+ const set=(id,v,u,d=0)=>document.getElementById(id).textContent=v===null?'—':fmt(v,d)+' '+u;
+ set('avgCalories',average(last,dayCalories),'kcal');set('avgProtein',average(last,d=>mealTotal(d,'proteines')),'g');set('avgVeg',average(last,d=>mealTotal(d,'legumes')),'g');set('avgStarch',average(last,d=>mealTotal(d,'feculents')),'g');set('avgFruit',average(last,d=>mealTotal(d,'fruits')),'g');set('avgWeight',average(last,d=>d.poids),'kg',1);renderHistory()
+}
+function esc(v){return String(v??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')}
+function renderHistory(){const root=document.getElementById('history');if(!data.history.length){root.innerHTML='<p class="muted">Aucune journée archivée.</p>';return}root.innerHTML=[...data.history].reverse().map((d,r)=>{const i=data.history.length-1-r;return `<div class="history-item"><div class="history-title"><span>Jour ${i+1} — ${esc(d.date)}</span><span class="badge">${fmt(dayCalories(d))} kcal</span></div><details><summary>Voir le détail</summary><div class="detail"><b>Poids :</b> ${d.poids===null?'—':fmt(d.poids,1)+' kg'}<br><b>Matin :</b> ${esc(d.morning.description||'—')}<br><b>Midi :</b> ${esc(d.lunch.description||'—')}<br><b>Soir :</b> ${esc(d.dinner.description||'—')}<br><b>Protéines :</b> ${fmt(mealTotal(d,'proteines'))} g · <b>Légumes :</b> ${fmt(mealTotal(d,'legumes'))} g · <b>Féculents :</b> ${fmt(mealTotal(d,'feculents'))} g · <b>Fruits :</b> ${fmt(mealTotal(d,'fruits'))} g</div></details><button class="danger" onclick="deleteHistory(${i})">Supprimer</button></div>`}).join('')}
+window.deleteHistory=i=>{if(confirm('Supprimer cette journée ?')){data.history.splice(i,1);save();renderAll()}}
+function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download='mon-coach-poids-sauvegarde.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
+function importBackup(file){const r=new FileReader(),no=document.getElementById('backupNotice');r.onload=()=>{try{const x=JSON.parse(r.result);if(!confirm('Remplacer les données actuelles ?'))return;data=Object.assign(clone(defaults),x);save();renderAll();no.className='notice ok';no.textContent='Sauvegarde importée.'}catch(e){no.className='notice err';no.textContent='Fichier invalide.'}};r.readAsText(file)}
+function resetData(){if(confirm('Effacer toutes les données ?')){data=clone(defaults);localStorage.removeItem(KEY);renderAll()}}
+function previewPhotos(input,root){root.innerHTML='';[...(input.files||[])].forEach(f=>{const img=document.createElement('img');img.src=URL.createObjectURL(f);root.appendChild(img)})}
+function updateDayTotals(){const d=readDayForm();Object.keys(mealMap).forEach(k=>document.getElementById(k+'Total').textContent=fmt(d[k].calories));renderReport(d)}
+function renderAll(){renderProfile();fillDayForm(data.currentDay||emptyDay());renderReport(data.currentDay||emptyDay())}
+function autoArchive(){if(data.currentDay?.date&&data.currentDay.date!==todayLocal()&&dayCalories(data.currentDay)>0){const i=data.history.findIndex(x=>x.date===data.currentDay.date);if(i>=0)data.history[i]=data.currentDay;else data.history.push(data.currentDay);data.currentDay=emptyDay();save()}}
+
+renderMealBlocks();autoArchive();renderAll();
+document.querySelectorAll('.tab-btn').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.tab-btn').forEach(x=>x.classList.remove('active'));document.getElementById(b.dataset.tab).classList.add('active');b.classList.add('active');renderAll()});
+document.getElementById('saveProfile').onclick=saveProfile;
+document.getElementById('openChatGPT').onclick=openChatGPT;
+document.getElementById('importDayJson').onclick=importDayJson;
+document.getElementById('saveCurrentDay').onclick=saveCurrent;
+document.getElementById('archiveDay').onclick=archiveCurrent;
+document.getElementById('exportData').onclick=exportData;
+document.getElementById('resetData').onclick=resetData;
+document.getElementById('importBackup').onchange=e=>{if(e.target.files[0])importBackup(e.target.files[0]);e.target.value=''};
+document.getElementById('globalPhotos').onchange=e=>previewPhotos(e.target,document.getElementById('globalPreview'));
+document.querySelectorAll('#mealsTab input,#mealsTab textarea').forEach(el=>{if(!['jsonInput','globalText','globalPhotos'].includes(el.id))el.addEventListener('input',updateDayTotals)});
 </script>
-</body></html>
+</body>
+</html>
